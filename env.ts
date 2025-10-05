@@ -8,6 +8,7 @@ const isDevelopment = process.env.APP_STAGE === 'dev'
 const isTesting = process.env.APP_STAGE === 'test'
 
 if (isDevelopment) {
+  loadEnv('test', false)
   loadEnv()
 } else if (isTesting) {
   loadEnv('test')
@@ -19,12 +20,12 @@ const envSchema = z.object({
     .default('development'),
 
   APP_STAGE: z.enum(['dev', 'test', 'production']).default('dev'),
-
-  PORT: z.coerce.number().positive().default(3000),
+  PORT: z.coerce.number().positive().default(1337),
   DATABASE_URL: z.string().startsWith('postgresql://'),
   JWT_SECRET: z.string().min(32, 'Must be 32 chars long'),
-  JWT_EXPIRES_IN: z.string().default('7d'),
+  JWT_EXPIRES_IN: z.string().default(isProduction ? '7d' : '30d'),
   BCRYPT_ROUNDS: z.coerce.number().min(10).max(20).default(12),
+  DEBUG_MODE: z.coerce.boolean().default(false)
 })
 
 export type Env = z.infer<typeof envSchema>
