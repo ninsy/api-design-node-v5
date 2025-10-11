@@ -24,3 +24,38 @@
 
 setTimeout, performance, crypto, atob, setImmediate, setInterval, etc...
 
+## db migrations
+
+### Schema migration
+
+```sql
+CREATE TABLE tags (
+    id UUID PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
+
+ALTER TABLE habits ADD COLUMN is_active BOOLEAN DEFAULT true;
+
+CREATE INDEX idx_habits_user_id ON HABITS(user_id);
+
+ALTER TABLE users ADD CONSTRAINT user_email_unique UNIQUE (email)
+```
+
+### Data migration
+
+```sql
+UPDATE habits
+SET category = CASE
+    WHEN name ILIKE '%exercise%' THEN 'fitness'
+    WHEN name ILIKE '%read%' THEN 'learning'
+    ELSE 'other'
+END;
+
+INSERT INTO habit_tags (habit_id, tag_id)
+SELECT h.id t.id
+FROM habits h, tags t
+WHERE h.category = t.name
+
+DELETE FROM habits WHERE created_at < '2020-01-01';
+
+```

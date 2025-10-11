@@ -19,7 +19,7 @@ router.post(
     '/',
     [schemaValidation(postSchema)],
     async (req: Request<{}, {}, PostSchema>, res) => {
-        const { body } = req;   
+        const { body, headers } = req;
         res.status(201).json({ message: 'created habit' })
     }
 );

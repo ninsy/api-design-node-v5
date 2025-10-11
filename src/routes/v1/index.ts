@@ -1,9 +1,8 @@
 import { Router } from 'express';
 
-import authRouter from './auth.ts';
-import userRouter from './user.ts';
+import authRouter from './auth/auth.ts';
+import userRouter from './user/user.ts';
 import habitRouter from './habit/habit.ts';
-
 
 const v1Router = Router();
 

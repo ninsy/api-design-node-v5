@@ -1,14 +1,24 @@
 import express from "express";
 import path from "path";
-import { __dirname } from './utilts.ts';
+import cors from 'cors';
+import morgan from 'morgan';
+import helmet from 'helmet';
 
+import { __dirname } from './utilts.ts';
 import { v1Router } from './routes/v1/index.ts';
 import { errValidation } from './middlewares/index.ts';
-import { isDev, env } from "../env.ts";
+import { isDev, env, isTest } from "../env.ts";
 
 const app = express();
 
-app.use(express.json())
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
+app.use(morgan('dev', {
+    skip: isTest
+}));
+
 app.use('/api/v1', v1Router)
 
 if (isDev() || env.DEBUG_MODE) {
