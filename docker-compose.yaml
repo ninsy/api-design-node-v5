@@ -2,7 +2,10 @@ include:
   - docker-compose-db.yaml
 services:
   api:
-    build: .
+    build:
+      context: .
+      args:
+        - NODE_VERSION=$NODE_VERSION
     ports:
       - 1337:1337
     volumes:

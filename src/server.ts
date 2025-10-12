@@ -4,6 +4,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 
+import { db } from './db/index.ts';
 import { __dirname } from './utilts.ts';
 import { v1Router } from './routes/v1/index.ts';
 import { errValidation } from './middlewares/index.ts';
@@ -28,6 +29,7 @@ if (isDev() || env.DEBUG_MODE) {
 }
 
 app.get('/healthcheck', async (req, res)  => {
+    await db.execute('SELECT 1;')
     res.status(200).json({
         timestamp: new Date().toISOString(),
         status: 'OK',

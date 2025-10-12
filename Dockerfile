@@ -1,4 +1,6 @@
-FROM node:24 as BASE
+ARG NODE_VERSION
+
+FROM node:${NODE_VERSION} as base
 
 WORKDIR /app
 COPY --chown=node:node package*.json .

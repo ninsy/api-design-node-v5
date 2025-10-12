@@ -21,11 +21,16 @@ const envSchema = z.object({
 
   APP_STAGE: z.enum(['dev', 'test', 'production']).default('dev'),
   PORT: z.coerce.number().positive().default(1337),
-  DATABASE_URL: z.string().startsWith('postgresql://'),
   JWT_SECRET: z.string().min(32, 'Must be 32 chars long'),
   JWT_EXPIRES_IN: z.string().default(isProduction ? '7d' : '30d'),
   BCRYPT_ROUNDS: z.coerce.number().min(10).max(20).default(12),
-  DEBUG_MODE: z.coerce.boolean().default(false)
+  DEBUG_MODE: z.coerce.boolean().default(false),
+  // DB
+  POSTGRES_PASSWORD: z.string().min(6).brand("pg_pass"),
+  POSTGRES_USER: z.string().brand('pg_user'),
+  POSTGRES_DB: z.string().brand('pg_db'),
+  POSTGRES_HOST: z.string().brand('pg_host'),
+  POSTGRES_PORT: z.coerce.number().positive().default(5432).brand("pg_port")
 })
 
 export type Env = z.infer<typeof envSchema>
