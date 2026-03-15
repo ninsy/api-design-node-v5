@@ -1,6 +1,7 @@
 import type { RequestHandler } from 'express';
 import { z, parse, ZodError, treeifyError } from 'zod';
 
+// TODO: some plugin from express for zod?
 const schemaValidation: <T extends z.ZodType>(schema: T) => RequestHandler =
 (schema) => async (req, res, next) => {
     const { body } = req;

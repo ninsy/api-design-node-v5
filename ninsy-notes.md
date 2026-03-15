@@ -1,3 +1,9 @@
+# Reference
+
+https://api-design-with-node-v5.super.site/4-db-setup-and-schema
+
+<!-- TODO: przenieś do docsów? -->
+
 # Intro
 
 ## Browser JavaScript
